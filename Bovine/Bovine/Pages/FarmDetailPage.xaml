@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Bovine.Pages.FarmDetailPage"
+             Visual="Material">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="baseStyle" TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Fazenda"/>
+        <ToolbarItem IconImageSource="farm.png" Order="Primary" Priority="0"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <ScrollView>
+                <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start">
+                    <Label x:Name="labelID" FontSize="Subtitle" Text="ID" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryID" Text="{Binding id, Mode=TwoWay}" FlexLayout.Basis="100%" Margin="0,0,0,10" IsEnabled="False"/>
+
+                    <Label x:Name="labelName" FontSize="Subtitle" Text="Nome da Fazenda" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryName" Text="{Binding name.value, Mode=TwoWay}" Keyboard="Text" FlexLayout.Basis="100%" Margin="0,0,0,10"/>
+
+                    <Label x:Name="labelDescription" FontSize="Subtitle" Text="Descrição" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryDescription" Text="{Binding description.value, Mode=TwoWay}" Keyboard="Text" FlexLayout.Basis="100%" Margin="0,0,0,10"/>
+
+                    <!--<Label x:Name="labelPostalCode" FontSize="Subtitle" Text="CEP" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryPostalCode" Text="{Binding PostalCode}" FlexLayout.Basis="60%" Margin="0,0,0,10"/>-->
+
+                    <Label x:Name="labelStreet" FontSize="Subtitle" Text="Endereço" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryStreet" Text="{Binding address.value.streetAddress, Mode=TwoWay}" Keyboard="Text" FlexLayout.Basis="100%" Margin="0,0,0,10"/>
+
+                    <Label x:Name="labelLocality" FontSize="Subtitle" Text="Localidade" FlexLayout.Basis="70%" />
+                    <Label x:Name="labelCountry" FontSize="Subtitle" Text="País" FlexLayout.Basis="25%" />
+
+                    <Entry x:Name="entryLocality" Text="{Binding address.value.addressLocality, Mode=TwoWay}" Keyboard="Text" FlexLayout.Basis="70%" Margin="0,0,0,10"/>
+                    <Entry x:Name="entryCountry" Text="{Binding address.value.addressCountry, Mode=TwoWay}" Keyboard="Text" FlexLayout.Basis="25%" Margin="0,0,0,10"/>
+
+                    <!--<Label x:Name="labelCountry" FontSize="Subtitle" Text="País" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryCountry" Text="{Binding Country}" FlexLayout.Basis="100%" Margin="0,0,0,10"/>
+
+                    <Label x:Name="labelEmail" FontSize="Subtitle" Text="E-mail" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryEmail" Text="{Binding Email}" FlexLayout.Basis="100%" Margin="0,0,0,10"/>
+
+                    <Label x:Name="labelPhone" FontSize="Subtitle" Text="Telefone" FlexLayout.Basis="100%" />
+                    <Entry x:Name="entryPhone" Text="{Binding Phone}" FlexLayout.Basis="100%" Margin="0,0,0,10"/>-->
+
+                    <BoxView HorizontalOptions="CenterAndExpand" FlexLayout.Basis="100%"/>
+
+                    <Button x:Name="buttonSave" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnSaveButtonClicked" Text="salvar" 
+                            HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+
+                    <Button x:Name="buttonDelete" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnDeleteButtonClicked" Text="apagar" 
+                            HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+
+                    <Button x:Name="buttonCancel" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnCancelButtonClicked" Text="cancelar" 
+                            HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+                </FlexLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

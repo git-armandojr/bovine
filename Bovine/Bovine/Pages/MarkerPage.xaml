@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:local="clr-namespace:Bovine.Pages"
+             mc:Ignorable="d"
+             x:Class="Bovine.Pages.MarkerPage"
+             Padding="10"
+             Visual="Material"
+             Icon="grassland.png"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Editar"
+                     Order="Secondary"
+                     Priority="0" 
+                     Clicked="OnItemEditClicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <maps:Map x:Name="map"
+                  IsShowingUser="true"
+                  MapClicked="OnMapClicked"
+                  ItemsSource="{Binding Locations}">
+                <!-- Alternatively, set ItemTemplateSelector to MapItemTemplateSelector -->
+                <maps:Map.ItemTemplate>
+                    <DataTemplate>
+                        <maps:Pin Position="{Binding Position}"
+                              Address="{Binding Address}"
+                              Label="{Binding Description}" />
+                    </DataTemplate>
+                </maps:Map.ItemTemplate>
+            </maps:Map>
+            <StackLayout Orientation="Horizontal" 
+                         HorizontalOptions="Center">
+                <Button Text="construir" 
+                        VerticalOptions="EndAndExpand"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Clicked="OnBuildClicked"/>
+                <!--<Button Text="Remove"
+                        Command="{Binding AddLocationCommand}"
+                        Command="{Binding RemoveLocationCommand}" />
+                    <Button Text="Clear"
+                        Command="{Binding ClearLocationsCommand}" />
+                    <Button Text="Update"
+                        Command="{Binding UpdateLocationsCommand}" />
+                    <Button Text="Replace"
+                        Command="{Binding ReplaceLocationCommand}" />-->
+            </StackLayout>
+            <!--<ScrollView Grid.Row="1"
+                    Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Button Text="marcar"
+                            BackgroundColor="{StaticResource PrimaryColor}"
+                            Command="{Binding AddLocationCommand}" />
+                    --><!--<Button Text="Remove"
+                        Command="{Binding RemoveLocationCommand}" />
+                    <Button Text="Clear"
+                        Command="{Binding ClearLocationsCommand}" />
+                    <Button Text="Update"
+                        Command="{Binding UpdateLocationsCommand}" />
+                    <Button Text="Replace"
+                        Command="{Binding ReplaceLocationCommand}" />--><!--
+                </StackLayout>
+            </ScrollView>-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

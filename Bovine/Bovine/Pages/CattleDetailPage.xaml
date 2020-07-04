@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:Bovine.Behaviors"
+             xmlns:converter="clr-namespace:Bovine.Converter"
+             xmlns:local="clr-namespace:Bovine.Validations"
+             mc:Ignorable="d"
+             x:Class="Bovine.Pages.CattleDetailPage"
+             Visual="Material">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="baseStyle" TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+
+            <converter:BooleanToObjectConverter x:Key="boolToStyleIdentifier" x:TypeArguments="Style">
+                <converter:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="O identificador é obrigatório." />
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </converter:BooleanToObjectConverter.FalseObject>
+                <converter:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="IsVisible" Value="False" />
+                        <Setter Property="Margin" Value="0,0,0,-30" />
+                    </Style>
+                </converter:BooleanToObjectConverter.TrueObject>
+            </converter:BooleanToObjectConverter>
+
+            <converter:BooleanToObjectConverter x:Key="boolToStyleWeight" x:TypeArguments="Style">
+                <converter:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Peso inválido." />
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </converter:BooleanToObjectConverter.FalseObject>
+                <converter:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="IsVisible" Value="False" />
+                        <Setter Property="Margin" Value="0,0,0,-30" />
+                    </Style>
+                </converter:BooleanToObjectConverter.TrueObject>
+            </converter:BooleanToObjectConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Gado"/>
+        <ToolbarItem IconImageSource="cow.png" Order="Primary" Priority="0"/>        
+    </ContentPage.ToolbarItems>    
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start">
+                <Label x:Name="labelID" FontSize="Subtitle" Text="ID" FlexLayout.Basis="100%" />
+                <Entry x:Name="entryID" Text="{Binding id, Mode=TwoWay}" FlexLayout.Basis="100%" Margin="0,0,0,10" IsEnabled="False"/>
+                
+                <Label x:Name="labelIdentifier" FontSize="Subtitle" Text="Identificador" FlexLayout.Basis="100%" />
+                <Entry x:Name="entryIdentifier" Text="{Binding legalID.value, Mode=TwoWay}" FlexLayout.Basis="100%" Margin="0,0,0,10">
+                    <Entry.Behaviors>
+                        <local:IsNotNullOrEmptyRule x:Name="identifierValidator"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="labelErrorIdentifier" Style="{Binding Source={x:Reference identifierValidator}, Path=IsValid, Converter={StaticResource boolToStyleIdentifier}}" FlexLayout.Basis="100%" />
+
+                <Label x:Name="labelType" Text="Tipo" FlexLayout.Basis="48%" FontSize="Subtitle" />
+                <Label x:Name="labelBirthDate" Text="Data de Nascimento" FlexLayout.Basis="48%" FontSize="Subtitle" />
+
+                <Picker x:Name="pickerSpecie" SelectedIndexChanged="OnPickerSpecieSelectedIndexChanged" FlexLayout.Basis="48%" SelectedItem="{Binding species.value, Mode=TwoWay}">
+                    <Picker.Items>
+                        <x:String>Leiteiro</x:String>
+                        <x:String>Corte</x:String>
+                    </Picker.Items>
+                </Picker>
+                <DatePicker x:Name="datePickerBirthdate" MinimumDate="01/01/1950" FlexLayout.Basis="48%" Margin="0,0,0,10" Date="{Binding birthdate.value, Mode=TwoWay}"/>
+
+                <Label x:Name="labelSex"  FontSize="Subtitle" Text="Sexo" FlexLayout.Basis="48%" />
+                <Label x:Name="labelWeight" Text="Peso" FlexLayout.Basis="48%" FontSize="Subtitle" />
+
+                <Picker x:Name="pickerSex" SelectedIndexChanged="OnPickerSexSelectedIndexChanged" FlexLayout.Basis="48%" SelectedItem="{Binding sex.value, Mode=TwoWay}">
+                    <Picker.Items>
+                        <x:String>Fêmea</x:String>
+                        <x:String>Macho</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Entry x:Name="entryWeight" Keyboard="Numeric" Text="{Binding weight.value, Mode=TwoWay, StringFormat='{0:F3}'}" FlexLayout.Basis="48%" Margin="0,0,0,10" />
+
+                
+                <Frame x:Name="frameJson" FlexLayout.Basis="100%" HeightRequest="200" IsVisible="False">
+                    <ScrollView>
+                        <Label x:Name="labelJson" FlexLayout.Basis="100%" FontSize="Subtitle" />
+                    </ScrollView>
+                </Frame>                
+
+                <BoxView HorizontalOptions="CenterAndExpand" FlexLayout.Basis="100%"/>
+
+                <Button x:Name="buttonJson" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnJsonButtonClicked" Text="json" 
+                        HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5" IsVisible="False"/>
+
+                <Button x:Name="buttonSave" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnSaveButtonClicked" Text="salvar" 
+                        HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+
+                <Button x:Name="buttonDelete" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnDeleteButtonClicked" Text="apagar" 
+                        HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+
+                <Button x:Name="buttonCancel" BackgroundColor="{StaticResource PrimaryColor}" Clicked="OnCancelButtonClicked" Text="cancelar" 
+                        HorizontalOptions="FillAndExpand" FlexLayout.Basis="100%" Margin="0,0,0,20" Padding="5"/>
+            </FlexLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

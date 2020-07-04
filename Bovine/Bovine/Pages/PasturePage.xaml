@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:constrols="clr-namespace:Bovine.Controls"
+             mc:Ignorable="d"
+             x:Class="Bovine.Pages.PasturePage"
+             Padding="10"
+             Visual="Material"
+             Title="Pasto"
+             Icon="grassland.png">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="listViewPasture" 
+                      HasUnevenRows="True" 
+                      ItemSelected="OnItemSelected"
+                      ItemsSource="{Binding}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <constrols:PastureCell ID="{Binding id}" Description="{Binding description.value}" Area="{Binding area.value}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="buttonNew" BackgroundColor="{StaticResource PrimaryColor}"  Text="adicionar" Clicked="OnButtonAddClicked" Padding="5"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

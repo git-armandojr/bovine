@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             mc:Ignorable="d"
+             x:Class="Bovine.Pages.PolygonMarkerPage"
+             Visual="Material">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <maps:Map x:Name="map"
+                  IsShowingUser="true"
+                  MapClicked="OnMapClicked"
+                  ItemsSource="{Binding Locations}">
+                <!-- Alternatively, set ItemTemplateSelector to MapItemTemplateSelector -->
+                <maps:Map.ItemTemplate>
+                    <DataTemplate>
+                        <maps:Pin Position="{Binding Position}"
+                              Address="{Binding Address}"
+                              Label="{Binding Description}" />
+                    </DataTemplate>
+                </maps:Map.ItemTemplate>
+            </maps:Map>
+            <BoxView Color="Transparent"
+                     HorizontalOptions="Center"
+                     VerticalOptions="EndAndExpand"
+                     WidthRequest="230"
+                     HeightRequest="75"/>
+            <Button x:Name="buttonBuild" 
+                    Text="construir"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{Binding AddLocationCommand}" 
+                    Clicked="OnBuildClicked"
+                    VerticalOptions="EndAndExpand"
+                    Margin="80,25,80,14"/>
+            <Button x:Name="buttonSave" 
+                    Text="salvar"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Clicked="OnSaveClicked"
+                    VerticalOptions="EndAndExpand"
+                    Margin="80,25,80,14"
+                    IsVisible="False" />
+            <Button x:Name="buttonRebuild" 
+                    Text="reconstruir"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Clicked="OnRebuildClicked"
+                    VerticalOptions="EndAndExpand"
+                    Margin="80,25,80,14"
+                    IsVisible="False" />
+            <Button x:Name="buttonRemove"
+                    Text="remover"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Clicked="OnRemoveClicked"
+                    VerticalOptions="EndAndExpand"
+                    Margin="80,25,80,58"
+                    IsVisible="False" />
+            <Button x:Name="buttonClear"
+                    Text="limpar"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Clicked="OnClearClicked"
+                    VerticalOptions="EndAndExpand"
+                    Margin="80,25,80,58"
+                    IsVisible="False" />
+            <!--<ScrollView Grid.Row="1"
+                    Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Button Text="construir"
+                            BackgroundColor="{StaticResource PrimaryColor}"
+                            Command="{Binding AddLocationCommand}" 
+                            Clicked="OnBuildClicked"/>-->
+                    <!--<Button Text="Remove"
+                        Command="{Binding RemoveLocationCommand}" />
+                    <Button Text="Clear"
+                        Command="{Binding ClearLocationsCommand}" />
+                    <Button Text="Update"
+                        Command="{Binding UpdateLocationsCommand}" />
+                    <Button Text="Replace"
+                        Command="{Binding ReplaceLocationCommand}" />-->
+                <!--</StackLayout>
+            </ScrollView>-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
